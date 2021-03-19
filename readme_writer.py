@@ -12,10 +12,7 @@ import os
 #this will make future updates of readme much, much easier
 #TODO modify this function to accept optional json argument for that reason
 
-def readme_writer(foldername,purpose=None,backstory=None,prework=None,frequency=None):
-    #TODO make this tool more sophisticated to work with metaprogram 
-    readme=None
-    bre="\n"
+def dict_unpack(foldername):
     if fileverify(os.path.join(foldername,'readme_dict.json')):
         readme=read_json(os.path.join(foldername,'readme_dict.json'))    
         readme2=[]
@@ -24,6 +21,14 @@ def readme_writer(foldername,purpose=None,backstory=None,prework=None,frequency=
             readme2.append(bre)
             readme2.append(v)
         readme=readme2[:]
+        return(readme)
+    else:
+        return(None)
+
+def readme_writer(foldername,purpose=None,backstory=None,prework=None,frequency=None,readme=None):
+    #TODO make this tool more sophisticated to work with metaprogram 
+    bre="\n"
+    if readme:
         purpose=readme[2]
         backstory=readme[5]
         libs=readme[8]
@@ -96,13 +101,20 @@ def grab_readme(filename=None):
 
 def rewrite_readme(foldername):
     os.chdir(foldername)
-    readlist=grab_readme()
-    packlist=[]
-    for i in range(4):
-        packlist.append(select_thing([i for i in readlist if i not in packlist]))
-    readme_writer(foldername,purpose=packlist[0],backstory=packlist[1],
-                  prework=packlist[2],frequency=packlist[3])
-        
+    jsonfile=dict_unpack(foldername)
+    if jsonfile:
+        readme_writer(foldername,readme=jsonfile)
+    else:
+        try:
+            readlist=grab_readme()
+        except:
+            return(None)
+        packlist=[]
+        for i in range(4):
+            packlist.append(select_thing([i for i in readlist if i not in packlist]))
+        readme_writer(foldername,purpose=packlist[0],backstory=packlist[1],
+                      prework=packlist[2],frequency=packlist[3])
+            
 
 def main(folder=None):
     if folder:
