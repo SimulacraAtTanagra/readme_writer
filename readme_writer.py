@@ -5,7 +5,7 @@ Created on Thu Mar 18 18:21:02 2021
 @author: shane
 """
 
-from admin import fileverify, read_json, write_json, select_thing
+from src.admin import fileverify, read_json, write_json, select_thing
 import os
    
 #TODO update this to reate a json file inside the repo with this information
