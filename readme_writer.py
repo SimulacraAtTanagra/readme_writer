@@ -5,13 +5,13 @@ Created on Thu Mar 18 18:21:02 2021
 @author: shane
 """
 
-from src.admin import fileverify, read_json, write_json, select_thing
+from admin import fileverify, read_json, write_json, select_thing
 import os
    
 #TODO update this to reate a json file inside the repo with this information
 #this will make future updates of readme much, much easier
 #TODO modify this function to accept optional json argument for that reason
-
+#TODO fix dict_unpack 'bre' call
 def dict_unpack(foldername):
     if fileverify(os.path.join(foldername,'readme_dict.json')):
         readme=read_json(os.path.join(foldername,'readme_dict.json'))    
